@@ -39,13 +39,13 @@ services:
       LANGCHAIN_PROJECT: ${LANGCHAIN_PROJECT:-symphony}
       DATASET_DIR: /data/dataset
     volumes:
-      - ${DATASET_DIR:-../symph-prgm-mgmt/dataset}:/data/dataset
+      - ${DATASET_DIR:-../dataset}:/data/dataset
     depends_on:
       migrate:
         condition: service_completed_successfully
 
   frontend:
-    build: ../symph-front-end
+    build: ../vageesh-front-end
     ports:
       - "80:80"
     depends_on:

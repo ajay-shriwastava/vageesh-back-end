@@ -1,6 +1,6 @@
 # Portfolio Recommendation Agent
 
-> Pravar.AI Assignment deliverable — built as a workflow template on Symphony, an Agentic AI Orchestration Platform.
+> Portfolio Mgmt deliverable — built as a workflow template on Vageesh, an Agentic AI Orchestration Platform.
 
 ---
 
@@ -8,7 +8,7 @@
 
 A four-node LangGraph pipeline that fetches live Indian market headlines, scores each investor's weighted sector exposure against the affected sectors, enforces the product universe constraint deterministically, and posts a consolidated RM-ready alert to `#portfolio-reco` on Slack.
 
-**Trigger:** Manual, from the Symphony UI
+**Trigger:** Manual, from the Vageesh UI
 **Data:** Pre-ingested CSVs — 15 investors, 89 holdings, 33 approved funds
 **Telemetry:** LangSmith (token counts, cost, latency per node)
 
@@ -34,7 +34,7 @@ For architecture decisions, design trade-offs, and industry best practices: [`do
 
 1. **Set environment variables** in `.env`:
    ```
-   DATASET_DIR=/path/to/pravar/dataset
+   DATASET_DIR=/Users/ajay/tech/dataset/portfolio
    SLACK_BOT_TOKEN=xoxb-...
    SLACK_REPORT_CHANNEL=portfolio-reco
    LANGCHAIN_TRACING_V2=true

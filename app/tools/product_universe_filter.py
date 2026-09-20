@@ -23,7 +23,11 @@ import re
 logger = logging.getLogger(__name__)
 
 
-_DEFAULT_DATASET_DIR = os.environ.get("DATASET_DIR", "/Users/ajay/tech/pravar/dataset")
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+_DEFAULT_DATASET_DIR = os.environ.get(
+    "DATASET_DIR",
+    os.path.normpath(os.path.join(_PROJECT_ROOT, "../../dataset/portfolio")),
+)
 
 
 def _load_valid_fund_ids(catalogue_path: str | None = None) -> set[str]:

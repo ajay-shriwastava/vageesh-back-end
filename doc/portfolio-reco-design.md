@@ -1,7 +1,7 @@
 # Portfolio Recommendation Agent — Design Document
 
 **Feature:** Market Signal → Portfolio Recommendation
-**Platform:** Symphony (Agentic AI Orchestration Platform)
+**Platform:** Vageesh (Agentic AI Orchestration Platform)
 **Deliverable:** Workflow template running end-to-end against real market events
 
 ---
@@ -42,7 +42,7 @@ Start
 End
 ```
 
-Built as a workflow template in Symphony, following the same pattern as `data_ingestion.py` and `sre_report.py`.
+Built as a workflow template in Vageesh, following the same pattern as `data_ingestion.py` and `sre_report.py`.
 
 ---
 
@@ -158,7 +158,7 @@ All LangGraph calls are automatically traced. Each workflow run is tagged with `
 
 ---
 
-## Symphony Platform — Industry Best Practices
+## Vageesh Platform — Industry Best Practices
 
 ### Agent Architecture
 
@@ -174,10 +174,10 @@ All LangGraph calls are automatically traced. Each workflow run is tagged with `
 
 | Practice | Implementation |
 |---|---|
-| Codebase separation | Three repositories: `symph-prgm-mgmt` (planning), `symph-front-end` (UI), `symph-back-end` (platform) |
-| Centralized agent definition | Agents are PostgreSQL records managed via the Symphony UI — not hardcoded per project. One agent definition is reusable across all workflows that need it |
+| Codebase separation | Three repositories: `vageesh-prgm-mgmt` (planning), `vageesh-front-end` (UI), `vageesh-back-end` (platform) |
+| Centralized agent definition | Agents are PostgreSQL records managed via the Vageesh UI — not hardcoded per project. One agent definition is reusable across all workflows that need it |
 | Agent communication | Async Python (`asyncio`) within workflow runs; run events streamed to clients via WebSocket (`node_enter`, `node_complete`, `edge_traverse`). Note: this is async I/O, not a distributed message queue — message-queue async (Kafka, Redis Streams) would be the production evolution |
-| Message history | Every agent message written to the `messages` table with `session_id`; workflow outputs stored in `workflow_runs`; surfaced in the Symphony UI |
+| Message history | Every agent message written to the `messages` table with `session_id`; workflow outputs stored in `workflow_runs`; surfaced in the Vageesh UI |
 | Live monitoring | WebSocket run event stream, LangSmith tracing (full prompt/response, token counts, cost per node, latency), persistent logs via `logs` router |
 
 ### Separation of Concerns

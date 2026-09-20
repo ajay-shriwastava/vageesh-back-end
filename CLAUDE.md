@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Symphony is an Agentic AI Orchestration Platform. This repo is the FastAPI backend (`symph-back-end`).
+Vageesh is an Agentic AI Orchestration Platform. This repo is the FastAPI backend (`vageesh-back-end`).
 
 ## Development Commands
 

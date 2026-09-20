@@ -17,7 +17,7 @@ from app.tools.tool_context import tool_config as _tool_config_var
 logger = logging.getLogger(__name__)
 
 SLACK_REPORT_CHANNEL = os.environ.get("SLACK_REPORT_CHANNEL", "")
-DATASET_DIR = os.environ.get("DATASET_DIR", "/Users/ajay/tech/symphony/symph-prgm-mgmt/dataset")
+DATASET_DIR = os.environ.get("DATASET_DIR", "")
 
 
 # ---------------------------------------------------------------------------

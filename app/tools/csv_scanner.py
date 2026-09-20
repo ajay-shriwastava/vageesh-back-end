@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 DATASET_DIR = os.environ.get(
     "DATASET_DIR",
-    "/Users/ajay/tech/symphony/symph-prgm-mgmt/dataset",
+    "",
 )
 
 

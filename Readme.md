@@ -1,6 +1,6 @@
-# symph-back-end
+# vageesh-back-end
 
-FastAPI backend for Symphony — an Agentic AI Orchestration Platform.
+FastAPI backend for Vageesh — an Agentic AI Orchestration Platform.
 
 FastAPI + LangGraph + PostgreSQL, running in a Python virtualenv named `symphony`.
 
@@ -227,7 +227,7 @@ Copy `.env.example` → `.env` and fill in your values.
 
 ## Slack Integration
 
-Symphony includes a Socket Mode Slack bot (`app/slack_bot.py`) that starts automatically with the FastAPI server.
+Vageesh includes a Socket Mode Slack bot (`app/slack_bot.py`) that starts automatically with the FastAPI server.
 
 ### How it works
 
@@ -248,13 +248,13 @@ Symphony includes a Socket Mode Slack bot (`app/slack_bot.py`) that starts autom
    SLACK_BOT_TOKEN=xoxb-...
    SLACK_APP_TOKEN=xapp-...
    ```
-5. In the Symphony UI (**Agent Configuration → Channels**), add `slack` to the agent that should handle Slack messages
+5. In the Vageesh UI (**Agent Configuration → Channels**), add `slack` to the agent that should handle Slack messages
 
 ---
 
 ## Adding a New Messaging Channel
 
-Symphony's channel system is designed to make adding a new integration (Telegram, WhatsApp, Discord, etc.) straightforward. All channels follow the same pattern as the Slack bot.
+Vageesh's channel system is designed to make adding a new integration (Telegram, WhatsApp, Discord, etc.) straightforward. All channels follow the same pattern as the Slack bot.
 
 ### How channels work
 
@@ -323,7 +323,7 @@ if not token:
 
 ### Step 4 — Configure an agent
 
-In the Symphony UI (**Agent Configuration → Channels**), add the channel name string (e.g. `telegram`) to the agent that should handle messages from that channel. The bot picks it up immediately on the next message.
+In the Vageesh UI (**Agent Configuration → Channels**), add the channel name string (e.g. `telegram`) to the agent that should handle messages from that channel. The bot picks it up immediately on the next message.
 
 ### Channel routing summary
 
@@ -348,7 +348,7 @@ Send reply back through channel
 
 ## Observability — LangSmith Tracing
 
-Symphony integrates with [LangSmith](https://smith.langchain.com) for deep LLM tracing. When enabled, every workflow run and Slack bot message is automatically traced — including full prompt/response content, token counts, cost, and per-node latency.
+Vageesh integrates with [LangSmith](https://smith.langchain.com) for deep LLM tracing. When enabled, every workflow run and Slack bot message is automatically traced — including full prompt/response content, token counts, cost, and per-node latency.
 
 ### Setup
 

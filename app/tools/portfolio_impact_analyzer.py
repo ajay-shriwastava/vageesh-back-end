@@ -22,7 +22,9 @@ _MATERIAL_THRESHOLD_PCT = 5.0  # minimum weighted exposure to flag as materially
 
 def _dataset_dir() -> str:
     """Read DATASET_DIR at call time so server restarts / .env changes are picked up."""
-    return os.environ.get("DATASET_DIR", "/Users/ajay/tech/pravar/dataset")
+    _project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    _default = os.path.normpath(os.path.join(_project_root, "../../dataset/portfolio"))
+    return os.environ.get("DATASET_DIR", _default)
 
 # Target sub-categories per (risk_profile, sentiment) for alternative recommendations
 _RECO_TARGETS: dict[tuple[str, str], set[str]] = {
