@@ -368,3 +368,7 @@ Vageesh integrates with [LangSmith](https://smith.langchain.com) for deep LLM tr
 |---|---|
 | Workflow run (Agent node) | Full LangGraph run tree, per-node latency, Claude prompt + response, token usage, cost |
 | Slack message | Single LLM call with system prompt, user message, and reply |
+
+---
+
+Licensed under the Apache License 2.0. Copyright 2026 Ajay Shriwastava.
