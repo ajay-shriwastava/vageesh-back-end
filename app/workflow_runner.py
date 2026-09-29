@@ -908,7 +908,7 @@ async def run_workflow(
         if os.environ.get("LANGCHAIN_TRACING_V2") == "true":
             langsmith_cfg = {
                 "run_name": f"wf-{(workflow_id or '')[:8]}-run-{run_id[:8]}",
-                "tags":     ["symphony", "workflow-run"],
+                "tags":     ["vageesh", "workflow-run"],
                 "metadata": {"workflow_id": workflow_id or "", "run_id": run_id},
             }
 
@@ -943,9 +943,12 @@ async def run_workflow(
     except Exception as exc:
         error_msg = str(exc)
         await _write_log("ERROR", f"Workflow run {run_id} failed: {error_msg}", workflow_id)
-        await _update_run(
-            status="failed",
-            error=error_msg,
-            finished_at=datetime.now(timezone.utc),
-        )
+        try:
+            await _update_run(
+                status="failed",
+                error=error_msg,
+                finished_at=datetime.now(timezone.utc),
+            )
+        except Exception as db_exc:
+            logger.error("Could not mark run %s as failed in DB: %s", run_id, db_exc)
         await _broadcast(run_id, {"event": "run_error", "error": error_msg, "ts": _now_iso()})

@@ -17,8 +17,7 @@ WF_PAYLOAD = {
     "name": "My Workflow",
     "description": "A test workflow",
     "graph_definition": SIMPLE_GRAPH,
-    "trigger_type": "cron",
-    "schedule": "0 9 * * *",
+    "trigger_type": "web_ui",
 }
 
 
@@ -38,7 +37,7 @@ class TestCreateWorkflow:
         data = res.json()
         assert data["name"] == "My Workflow"
         assert data["status"] == "draft"
-        assert data["trigger_type"] == "cron"
+        assert data["trigger_type"] == "web_ui"
         assert uuid.UUID(data["id"])
 
     async def test_graph_definition_stored(self, client):
@@ -57,8 +56,7 @@ class TestCreateWorkflow:
         assert res.status_code == 201
         data = res.json()
         assert data["status"] == "draft"
-        assert data["trigger_type"] == "cron"
-        assert data["schedule"] is None
+        assert data["trigger_type"] == "web_ui"
 
 
 class TestListWorkflows:
@@ -121,13 +119,13 @@ class TestUpdateWorkflow:
         assert res.status_code == 200
         assert res.json()["graph_definition"]["max_loops"] == 15
 
-    async def test_update_schedule(self, client):
+    async def test_update_trigger_type(self, client):
         wf = await _make_workflow(client)
         res = await client.put(f"/api/v1/workflows/{wf['id']}",
-                               json={"schedule": "*/5 * * * *"},
+                               json={"trigger_type": "message"},
                                headers={"Authorization": "Bearer test"})
         assert res.status_code == 200
-        assert res.json()["schedule"] == "*/5 * * * *"
+        assert res.json()["trigger_type"] == "message"
 
     async def test_update_nonexistent_returns_404(self, client):
         res = await client.put(f"/api/v1/workflows/{uuid.uuid4()}",

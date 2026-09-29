@@ -92,7 +92,6 @@ PORTFOLIO_RECO_TEMPLATE: dict = {
         "Fetches real Indian market news, identifies materially impacted investors, "
         "enforces product universe constraints, and posts RM-ready Slack alerts to #portfolio-reco."
     ),
-    "schedule":     None,
     "trigger_type": "message",
     "tool_config_defaults": {
         "product_universe_filter": {"catalogue_path": ""},

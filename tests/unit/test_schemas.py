@@ -120,7 +120,7 @@ class TestWorkflowCreateSchema:
         w = WorkflowCreate(name="my-workflow")
         assert w.name == "my-workflow"
         assert w.status == "draft"
-        assert w.trigger_type == "cron"
+        assert w.trigger_type == "web_ui"
         assert w.graph_definition == {}
 
     def test_with_graph_definition(self):

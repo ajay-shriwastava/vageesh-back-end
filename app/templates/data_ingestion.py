@@ -33,7 +33,6 @@ DATA_INGESTION_TEMPLATE: dict = {
         "runs quality checks, ingests into PostgreSQL, profiles the data, "
         "and publishes a report to Slack and the output directory."
     ),
-    "schedule": None,
     "trigger_type": "message",
     "tool_config_defaults": {
         "csv_scanner":        {"dataset_dir": ""},

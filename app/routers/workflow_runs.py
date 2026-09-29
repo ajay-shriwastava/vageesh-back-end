@@ -1,5 +1,8 @@
 import asyncio
+import logging
 import uuid
+
+logger = logging.getLogger(__name__)
 
 from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect, status
 from sqlalchemy import func, select
@@ -73,6 +76,17 @@ async def start_run(
     from app.database import AsyncSessionLocal
 
     async def _background():
+        uses_slack = any(
+            "slack" in (a.channels or [])
+            for a in agents_map.values()
+        )
+        if uses_slack:
+            try:
+                from app.slack_bot import ensure_connected
+                await ensure_connected()
+            except Exception as exc:
+                logger.error("Slack reconnect failed — workflow will proceed without Slack: %s", exc)
+
         async with AsyncSessionLocal() as bg_db:
             await run_workflow(
                 run_id=str(run.id),

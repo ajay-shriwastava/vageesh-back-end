@@ -39,7 +39,6 @@ SRE_REPORT_TEMPLATE: dict = {
         "Two-agent handoff: Stats Collector gathers raw workflow run data, "
         "then hands off to SRE Report Writer which formats and publishes to #job-summary."
     ),
-    "schedule": None,
     "trigger_type": "message",
     "tool_config_defaults": {
         "publish_report": {"slack_channel": "job-summary", "dataset_dir": ""},

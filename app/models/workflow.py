@@ -22,7 +22,6 @@ class Workflow(Base):
     graph_definition: Mapped[dict] = mapped_column(
         JSONB, nullable=False, server_default=text("'{}'::jsonb")
     )
-    schedule: Mapped[str | None] = mapped_column(String(100), nullable=True)
     trigger_type: Mapped[str] = mapped_column(
         String(20), nullable=False, server_default="cron"
     )

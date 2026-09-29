@@ -1,5 +1,5 @@
 """
-Top-level shared fixtures for all Symphony tests.
+Top-level shared fixtures for all Vageesh tests.
 """
 import gc
 import os
@@ -97,12 +97,9 @@ async def client() -> AsyncClient:
     app.dependency_overrides[get_db] = _override_get_db
     app.dependency_overrides[get_current_user] = _override_get_current_user
 
-    # Prevent real Slack/scheduler connections during tests.
-    # Patch at app.main because that module imports these names at module level.
+    # Prevent real Slack connections during tests.
     with patch("app.main.start_slack_bot", AsyncMock()), \
-         patch("app.main.stop_slack_bot", AsyncMock()), \
-         patch("app.main.start_scheduler", AsyncMock()), \
-         patch("app.main.stop_scheduler", AsyncMock()):
+         patch("app.main.stop_slack_bot", AsyncMock()):
         transport = ASGITransport(app=app)
         async with AsyncClient(transport=transport, base_url="http://test") as ac:
             yield ac

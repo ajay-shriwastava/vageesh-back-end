@@ -1,5 +1,5 @@
 """
-Shared LLM-as-judge helper for Symphony eval tests.
+Shared LLM-as-judge helper for Vageesh eval tests.
 
 Uses claude-haiku-4-5-20251001 as the judge — cheap per call, sufficient for
 pass/fail evaluation against explicit criteria.

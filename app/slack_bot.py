@@ -348,8 +348,22 @@ async def start_slack_bot() -> None:
     _slack_client = SocketModeClient(app_token=app_token, web_client=web_client)
     _slack_client.socket_mode_request_listeners.append(_handle_event)
 
-    await _slack_client.connect()
-    logger.info("Slack bot connected via Socket Mode.")
+    try:
+        await _slack_client.connect()
+        logger.info("Slack bot connected via Socket Mode.")
+    except Exception as exc:
+        logger.warning("Slack bot failed to connect — bot disabled: %s", exc)
+        _slack_client = None
+
+
+async def ensure_connected() -> None:
+    """Attempt to connect the Slack bot if it is not already connected.
+    Called before workflow runs that involve a Slack-enabled agent."""
+    global _slack_client
+    if _slack_client is not None:
+        return
+    logger.info("Slack bot not connected — attempting reconnect.")
+    await start_slack_bot()
 
 
 async def stop_slack_bot() -> None:

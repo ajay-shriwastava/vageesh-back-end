@@ -24,8 +24,7 @@ async def list_templates(_: dict = Depends(get_current_user)):
             "id":           t["id"],
             "name":         t["name"],
             "description":  t["description"],
-            "schedule":     t.get("schedule"),
-            "trigger_type": t.get("trigger_type", "cron"),
+            "trigger_type": t.get("trigger_type", "web_ui"),
         }
         for t in TEMPLATES
     ]
@@ -94,20 +93,11 @@ async def instantiate_template(
         description=tmpl["description"],
         status="draft",
         graph_definition=graph_def,
-        schedule=tmpl.get("schedule"),
-        trigger_type=tmpl.get("trigger_type", "cron"),
+        trigger_type=tmpl.get("trigger_type", "web_ui"),
         tool_config=tmpl.get("tool_config_defaults", {}),
     )
     db.add(workflow)
     await db.commit()
     await db.refresh(workflow)
-
-    # Register cron schedule if applicable
-    if tmpl.get("trigger_type", "cron") == "cron" and tmpl.get("schedule"):
-        try:
-            from app.scheduler import register_workflow
-            await register_workflow(str(workflow.id), tmpl["schedule"], tmpl["name"])
-        except Exception:
-            pass  # Scheduler may not be running in test environments
 
     return workflow

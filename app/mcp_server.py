@@ -1,5 +1,5 @@
 """
-MCP server for Symphony — exposes agent memory and knowledge base as MCP tools.
+MCP server for Vageesh — exposes agent memory and knowledge base as MCP tools.
 
 Mount:  app.mount("/mcp", mcp_asgi_app)
 Auth:   X-MCP-API-Key header (value from MCP_API_KEY env var)
@@ -32,7 +32,7 @@ from app.models.memory import AgentMemory
 
 logger = logging.getLogger(__name__)
 
-mcp = FastMCP("Symphony")
+mcp = FastMCP("Vageesh")
 
 
 # ---------------------------------------------------------------------------

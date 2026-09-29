@@ -21,20 +21,20 @@ from app.routers.templates import router as templates_router
 from app.routers.tools import router as tools_router
 from app.routers.workflow_runs import router as workflow_runs_router
 from app.routers.workflow_runs import ws_router as workflow_runs_ws_router
-from app.scheduler import start_scheduler, stop_scheduler
 from app.slack_bot import start_slack_bot, stop_slack_bot
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await start_slack_bot()
-    await start_scheduler()
+    try:
+        await start_slack_bot()
+    except Exception as exc:
+        logging.warning("Slack bot startup error (non-fatal): %s", exc)
     yield
-    await stop_scheduler()
     await stop_slack_bot()
 
 
-app = FastAPI(title="Symphony API", version="0.1.0", lifespan=lifespan)
+app = FastAPI(title="Vageesh API", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -62,4 +62,4 @@ app.mount("/mcp", mcp_asgi_app)
 
 @app.get("/")
 async def root():
-    return {"service": "Symphony API", "status": "ok"}
+    return {"service": "Vageesh API", "status": "ok"}

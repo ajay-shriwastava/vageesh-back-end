@@ -2,7 +2,6 @@
 Integration tests for /api/v1/templates
 """
 import pytest
-from unittest.mock import AsyncMock, patch
 
 
 class TestListTemplates:
@@ -34,11 +33,10 @@ class TestListTemplates:
 class TestInstantiateTemplate:
     async def test_instantiate_data_ingestion(self, client):
         """data-ingestion-pipeline uses legacy agent_config (singular)."""
-        with patch("app.scheduler.register_workflow", AsyncMock()):
-            res = await client.post(
-                "/api/v1/templates/data-ingestion-pipeline/instantiate",
-                headers={"Authorization": "Bearer test"},
-            )
+        res = await client.post(
+            "/api/v1/templates/data-ingestion-pipeline/instantiate",
+            headers={"Authorization": "Bearer test"},
+        )
         assert res.status_code == 201
         data = res.json()
         assert data["name"].startswith("Data Ingestion Pipeline (")
@@ -57,11 +55,10 @@ class TestInstantiateTemplate:
 
     async def test_instantiate_sre_job_summary(self, client):
         """sre-job-summary uses agent_configs (list) — creates two agents."""
-        with patch("app.scheduler.register_workflow", AsyncMock()):
-            res = await client.post(
-                "/api/v1/templates/sre-job-summary/instantiate",
-                headers={"Authorization": "Bearer test"},
-            )
+        res = await client.post(
+            "/api/v1/templates/sre-job-summary/instantiate",
+            headers={"Authorization": "Bearer test"},
+        )
         assert res.status_code == 201
         data = res.json()
         assert "SRE Job Summary" in data["name"]
@@ -85,15 +82,14 @@ class TestInstantiateTemplate:
 
     async def test_each_instantiation_creates_new_workflow(self, client):
         """Calling instantiate twice creates two separate workflows."""
-        with patch("app.scheduler.register_workflow", AsyncMock()):
-            r1 = await client.post(
-                "/api/v1/templates/sre-job-summary/instantiate",
-                headers={"Authorization": "Bearer test"},
-            )
-            r2 = await client.post(
-                "/api/v1/templates/sre-job-summary/instantiate",
-                headers={"Authorization": "Bearer test"},
-            )
+        r1 = await client.post(
+            "/api/v1/templates/sre-job-summary/instantiate",
+            headers={"Authorization": "Bearer test"},
+        )
+        r2 = await client.post(
+            "/api/v1/templates/sre-job-summary/instantiate",
+            headers={"Authorization": "Bearer test"},
+        )
         assert r1.status_code == 201
         assert r2.status_code == 201
         assert r1.json()["id"] != r2.json()["id"]
@@ -101,11 +97,10 @@ class TestInstantiateTemplate:
 
     async def test_instantiate_data_ingestion_has_tool_config(self, client):
         """Instantiated workflow should have tool_config pre-populated from template defaults."""
-        with patch("app.scheduler.register_workflow", AsyncMock()):
-            res = await client.post(
-                "/api/v1/templates/data-ingestion-pipeline/instantiate",
-                headers={"Authorization": "Bearer test"},
-            )
+        res = await client.post(
+            "/api/v1/templates/data-ingestion-pipeline/instantiate",
+            headers={"Authorization": "Bearer test"},
+        )
         data = res.json()
         assert "tool_config" in data
         tc = data["tool_config"]
@@ -115,22 +110,20 @@ class TestInstantiateTemplate:
         assert tc["publish_report"]["slack_channel"] == "data-reports"
 
     async def test_instantiate_portfolio_reco_has_tool_config(self, client):
-        with patch("app.scheduler.register_workflow", AsyncMock()):
-            res = await client.post(
-                "/api/v1/templates/portfolio-recommendation/instantiate",
-                headers={"Authorization": "Bearer test"},
-            )
+        res = await client.post(
+            "/api/v1/templates/portfolio-recommendation/instantiate",
+            headers={"Authorization": "Bearer test"},
+        )
         data = res.json()
         tc = data["tool_config"]
         assert tc["publish_rm_alert"]["slack_channel"] == "portfolio-reco"
         assert "product_universe_filter" in tc
 
     async def test_instantiated_workflow_visible_in_list(self, client):
-        with patch("app.scheduler.register_workflow", AsyncMock()):
-            await client.post(
-                "/api/v1/templates/data-ingestion-pipeline/instantiate",
-                headers={"Authorization": "Bearer test"},
-            )
+        await client.post(
+            "/api/v1/templates/data-ingestion-pipeline/instantiate",
+            headers={"Authorization": "Bearer test"},
+        )
         res = await client.get("/api/v1/workflows",
                                headers={"Authorization": "Bearer test"})
         assert res.json()["total"] >= 1

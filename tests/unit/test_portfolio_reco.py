@@ -287,6 +287,6 @@ class TestPortfolioRecoTemplate:
         nodes = self.tmpl["graph_definition"]["nodes"]
         assert len(edges) == len(nodes) - 1
 
-    def test_no_schedule(self):
-        """Template is manually triggered — schedule must be None."""
-        assert self.tmpl["schedule"] is None
+    def test_trigger_type(self):
+        """Template is manually triggered."""
+        assert self.tmpl["trigger_type"] == "message"
