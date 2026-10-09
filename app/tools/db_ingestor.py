@@ -17,7 +17,7 @@ from app.tools.tool_context import tool_config as _tool_config_var
 
 logger = logging.getLogger(__name__)
 
-DATASET_DIR   = os.environ.get("DATASET_DIR", "")
+DATASET_DIR = os.path.join(os.environ.get("DATASET_DIR", ""), "ingestion")
 
 # pandas dtype string → PostgreSQL type
 _DTYPE_MAP: dict[str, str] = {

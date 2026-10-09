@@ -24,7 +24,8 @@ def _dataset_dir() -> str:
     """Read DATASET_DIR at call time so server restarts / .env changes are picked up."""
     _project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     _default = os.path.normpath(os.path.join(_project_root, "../../dataset/portfolio"))
-    return os.environ.get("DATASET_DIR", _default)
+    base = os.environ.get("DATASET_DIR", _default)
+    return os.path.join(base, "portfolio")
 
 # Target sub-categories per (risk_profile, sentiment) for alternative recommendations
 _RECO_TARGETS: dict[tuple[str, str], set[str]] = {

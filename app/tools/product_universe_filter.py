@@ -24,9 +24,12 @@ logger = logging.getLogger(__name__)
 
 
 _PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-_DEFAULT_DATASET_DIR = os.environ.get(
-    "DATASET_DIR",
-    os.path.normpath(os.path.join(_PROJECT_ROOT, "../../dataset/portfolio")),
+_DEFAULT_DATASET_DIR = os.path.join(
+    os.environ.get(
+        "DATASET_DIR",
+        os.path.normpath(os.path.join(_PROJECT_ROOT, "../../dataset/portfolio")),
+    ),
+    "portfolio",
 )
 
 
